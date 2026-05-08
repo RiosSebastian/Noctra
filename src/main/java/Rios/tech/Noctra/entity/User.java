@@ -1,5 +1,6 @@
 package Rios.tech.Noctra.entity;
 
+import Rios.tech.Noctra.util.Rol;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,7 +20,7 @@ public class User {
     private String username;
     private String email;
     private String password;
-    private  Rol rol;
+    private Rol rol;
 
     @OneToMany(mappedBy = "user")
     private List<Profile> profiles;

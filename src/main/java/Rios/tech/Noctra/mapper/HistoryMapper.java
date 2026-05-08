@@ -9,12 +9,16 @@ import org.springframework.stereotype.Component;
 public class HistoryMapper {
 
     public History toEntity(HistoryRequestDTO dto){
+
         History history = new History();
+
         history.setProgress(dto.getProgress());
+
         return history;
     }
 
-    public HistoryResponseDTO toDTO(History history){
+    public HistoryResponseDTO toResponse(History history){
+
         return HistoryResponseDTO.builder()
                 .id(history.getId())
                 .progress(history.getProgress())

@@ -2,6 +2,7 @@ package Rios.tech.Noctra.Controllers;
 
 import Rios.tech.Noctra.dto.Response.UserResponseDTO;
 import Rios.tech.Noctra.dto.UserRequestDTO;
+import Rios.tech.Noctra.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
