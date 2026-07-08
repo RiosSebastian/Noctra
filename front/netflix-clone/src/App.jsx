@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 //import { useEffect, useState } from 'react';
 import Navbar from './components/Navbar';
 //import { getAllContent } from './api/apiService';
@@ -28,6 +29,7 @@ function App() {
       <div className="px-12 py-10">
         <h3 className="text-2xl font-semibold mb-6">Contenido para ti</h3>
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+          
           {movies.map((movie) => (
             <div key={movie.id} className="bg-zinc-900 rounded-md overflow-hidden hover:scale-105 transition duration-300 border-b-4 border-netflix-purple">
               <div className="h-40 bg-purple-900/20 flex items-center justify-center">

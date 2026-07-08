@@ -49,7 +49,7 @@ public class UserServisImpl implements UserService {
 
         // Asegúrate de que estás codificando la contraseña
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-
+        user.setRol(Rol.USER);
         user = userRepository.save(user);
         return userMapper.toResponse(user);
     }

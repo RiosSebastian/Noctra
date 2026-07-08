@@ -23,31 +23,37 @@ public class FavoriteServiceImpl implements FavoriteService {
     private final ContentRepository contentRepository;
 
     @Override
-    public void addFavorite(FavoriteRequestDTO dto) {
+    public void addFavorite(User user, FavoriteRequestDTO dto){
 
-        if (favoriteRepository
-                .findByUserIdAndContentId(dto.getUserId(), dto.getContentId())
-                .isPresent()) {
-            throw new RuntimeException("Ya está en favoritos");
+        if(favoriteRepository
+                .findByUserIdAndContentId(
+                        user.getId(),
+                        dto.getContentId())
+                .isPresent()){
+
+            throw new RuntimeException(
+                    "Ya está en favoritos");
         }
 
-        User user = userRepository.findById(dto.getUserId())
-                .orElseThrow(() -> new RuntimeException("User no encontrado"));
-
-        Content content = contentRepository.findById(dto.getContentId())
-                .orElseThrow(() -> new RuntimeException("Contenido no encontrado"));
+        Content content =
+                contentRepository
+                        .findById(dto.getContentId())
+                        .orElseThrow();
 
         Favorite favorite = new Favorite();
+
         favorite.setUser(user);
+
         favorite.setContent(content);
 
         favoriteRepository.save(favorite);
+
     }
 
     @Override
-    public void removeFavorite(Long userId, Long contentId) {
+    public void removeFavorite(User user, Long contentId) {
         Favorite favorite = favoriteRepository
-                .findByUserIdAndContentId(userId, contentId)
+                .findByUserIdAndContentId(user, contentId)
                 .orElseThrow(() -> new RuntimeException("No existe en favoritos"));
 
         favoriteRepository.delete(favorite);

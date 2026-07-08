@@ -2,9 +2,11 @@ package Rios.tech.Noctra.Controllers;
 
 import Rios.tech.Noctra.dto.FavoriteRequestDTO;
 import Rios.tech.Noctra.dto.Response.FavoriteResponseDTO;
+import Rios.tech.Noctra.entity.User;
 import Rios.tech.Noctra.service.FavoriteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,20 +19,26 @@ public class FavoriteController {
     private final FavoriteService favoriteService;
 
     @PostMapping
-    public ResponseEntity<String> addFavorite(@RequestBody FavoriteRequestDTO dto){
-        favoriteService.addFavorite(dto);
+    public ResponseEntity<String> addFavorite(
+
+            @AuthenticationPrincipal User user,
+
+            @RequestBody FavoriteRequestDTO dto){
+
+        favoriteService.addFavorite(user, dto);
+
         return ResponseEntity.ok("Agregado a favoritos");
     }
 
     @DeleteMapping
-    public ResponseEntity<String> removeFavorite(
-            @RequestParam Long userId,
-            @RequestParam Long contentId){
+    public ResponseEntity<String> removeFavorite(@AuthenticationPrincipal User user, @RequestParam Long contentId){
 
-        favoriteService.removeFavorite(userId, contentId);
-        return ResponseEntity.ok("Eliminado de favoritos");
+        favoriteService.removeFavorite(
+                user,
+                contentId);
+
+        return ResponseEntity.ok("Eliminado");
     }
-
     @GetMapping("/{userId}")
     public ResponseEntity<List<FavoriteResponseDTO>> getFavorites(@PathVariable Long userId){
         return ResponseEntity.ok(favoriteService.getFavorites(userId));
