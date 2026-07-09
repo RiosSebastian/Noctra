@@ -3,6 +3,7 @@ package Rios.tech.Noctra.service.implementacion;
 import Rios.tech.Noctra.dto.Response.UserResponseDTO;
 import Rios.tech.Noctra.dto.UserRequestDTO;
 import Rios.tech.Noctra.entity.User;
+import Rios.tech.Noctra.exception.UserNotFoundException;
 import Rios.tech.Noctra.mapper.UserMapper;
 import Rios.tech.Noctra.repository.UserRepository;
 import Rios.tech.Noctra.service.UserService;
@@ -33,7 +34,7 @@ public class UserServisImpl implements UserService {
     public UserResponseDTO getUser(Long id) {
 
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+                .orElseThrow(() ->  new UserNotFoundException("Usuario no encontrado"));
 
         return userMapper.toResponse(user);
     }
@@ -56,13 +57,13 @@ public class UserServisImpl implements UserService {
 
     public UserResponseDTO getById(Long id) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+                .orElseThrow(() -> new UserNotFoundException("Usuario no encontrado"));
         return userMapper.toResponse(user);
     }
 
     public UserResponseDTO updateUser(Long id, UserRequestDTO userDTOReq) {
         User existingUser = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+                .orElseThrow(() -> new UserNotFoundException("Usuario no encontrado"));
         existingUser.setPassword(userDTOReq.getPassword());
         existingUser.setEmail(userDTOReq.getEmail());
         //existingUser.setUsername(Rol.valueOf(userDTOReq.getRol()));
@@ -73,7 +74,7 @@ public class UserServisImpl implements UserService {
 
     public void deleteUser(Long id) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+                .orElseThrow(() -> new UserNotFoundException("Usuario no encontrado"));
         userRepository.delete(user);
     }
 
@@ -86,7 +87,7 @@ public class UserServisImpl implements UserService {
 
     public UserResponseDTO updateProfileImage(Long id, String imageUrl) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+                .orElseThrow(() -> new UserNotFoundException("Usuario no encontrado"));
         //user.setProfileImage(imageUrl);
         userRepository.save(user);
         return userMapper.toResponse(user);

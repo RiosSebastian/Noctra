@@ -7,5 +7,5 @@ public class ProfileRequestDTO {
 
     private String name;
     private String avatarUrl;
-    private Long userId;
+    private Long contentId;
 }

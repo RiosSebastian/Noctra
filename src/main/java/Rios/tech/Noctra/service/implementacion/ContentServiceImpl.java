@@ -3,6 +3,7 @@ package Rios.tech.Noctra.service.implementacion;
 import Rios.tech.Noctra.dto.ContentRequestDTO;
 import Rios.tech.Noctra.dto.Response.ContentResponseDTO;
 import Rios.tech.Noctra.entity.Content;
+import Rios.tech.Noctra.exception.ContentNotFoundException;
 import Rios.tech.Noctra.mapper.ContentMapper;
 import Rios.tech.Noctra.repository.ContentRepository;
 import Rios.tech.Noctra.service.ContentService;
@@ -35,7 +36,7 @@ public class ContentServiceImpl implements ContentService {
     @Override
     public ContentResponseDTO getById(Long id) {
         Content content = contentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Contenido no encontrado"));
+                .orElseThrow(() -> new ContentNotFoundException("Contenido no encontrado"));
         return contentMapper.toResponse(content);
     }
 

@@ -4,6 +4,7 @@ import Rios.tech.Noctra.dto.FavoriteRequestDTO;
 import Rios.tech.Noctra.dto.Response.FavoriteResponseDTO;
 import Rios.tech.Noctra.entity.User;
 import Rios.tech.Noctra.service.FavoriteService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -19,11 +20,7 @@ public class FavoriteController {
     private final FavoriteService favoriteService;
 
     @PostMapping
-    public ResponseEntity<String> addFavorite(
-
-            @AuthenticationPrincipal User user,
-
-            @RequestBody FavoriteRequestDTO dto){
+    public ResponseEntity<String> addFavorite(@Valid @AuthenticationPrincipal User user, @RequestBody FavoriteRequestDTO dto){
 
         favoriteService.addFavorite(user, dto);
 
@@ -40,7 +37,7 @@ public class FavoriteController {
         return ResponseEntity.ok("Eliminado");
     }
     @GetMapping("/{userId}")
-    public ResponseEntity<List<FavoriteResponseDTO>> getFavorites(@PathVariable Long userId){
+    public ResponseEntity<List<FavoriteResponseDTO>> getFavorites(@Valid @PathVariable Long userId){
         return ResponseEntity.ok(favoriteService.getFavorites(userId));
     }
 }

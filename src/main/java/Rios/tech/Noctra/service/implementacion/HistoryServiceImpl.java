@@ -5,6 +5,7 @@ import Rios.tech.Noctra.dto.Response.HistoryResponseDTO;
 import Rios.tech.Noctra.entity.Content;
 import Rios.tech.Noctra.entity.History;
 import Rios.tech.Noctra.entity.Profile;
+import Rios.tech.Noctra.exception.ProfileNotFoundException;
 import Rios.tech.Noctra.repository.ContentRepository;
 import Rios.tech.Noctra.repository.HistoryRepository;
 import Rios.tech.Noctra.repository.ProfileRepository;
@@ -27,10 +28,10 @@ public class HistoryServiceImpl implements HistoryService {
     public void saveProgress(HistoryRequestDTO dto) {
 
         Profile profile = profileRepository.findById(dto.getProfileId())
-                .orElseThrow(() -> new RuntimeException("Perfil no encontrado"));
+                .orElseThrow(() ->  new ProfileNotFoundException("Perfil no encontrado"));
 
         Content content = contentRepository.findById(dto.getContentId())
-                .orElseThrow(() -> new RuntimeException("Contenido no encontrado"));
+                .orElseThrow(() -> new ProfileNotFoundException("Contenido no encontrado"));
 
         History history = new History();
         history.setProfile(profile);
