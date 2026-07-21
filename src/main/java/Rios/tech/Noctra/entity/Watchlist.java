@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -20,5 +21,5 @@ public class Watchlist {
     private Profile profile;
 
     @ManyToMany
-    private List<Content> contents;
+    private List<Content> contents = new ArrayList<>();
 }

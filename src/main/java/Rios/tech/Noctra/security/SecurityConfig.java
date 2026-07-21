@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -35,18 +36,12 @@ public class SecurityConfig {
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
                 .authorizeHttpRequests(auth -> auth
-
-                        .requestMatchers(
-                                "/api/auth/**"
-                        ).permitAll()
-
-                        .requestMatchers(
-                                "/api/content/**"
-                        ).permitAll()
-
-                        .anyRequest()
-                        .authenticated()
-
+                        .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/content/**", "/api/movies/**", "/api/series/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/movies/**", "/api/series/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/movies/**", "/api/series/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/movies/**", "/api/series/**").hasRole("ADMIN")
+                        .anyRequest().authenticated()
                 )
 
                 .authenticationProvider(authenticationProvider())

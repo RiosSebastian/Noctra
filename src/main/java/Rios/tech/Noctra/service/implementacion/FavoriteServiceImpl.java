@@ -6,6 +6,7 @@ import Rios.tech.Noctra.entity.Content;
 import Rios.tech.Noctra.entity.Favorite;
 import Rios.tech.Noctra.entity.User;
 import Rios.tech.Noctra.exception.FavoriteAlreadyExistsException;
+import Rios.tech.Noctra.exception.FavoriteNotFoundException;
 import Rios.tech.Noctra.repository.ContentRepository;
 import Rios.tech.Noctra.repository.FavoriteRepository;
 import Rios.tech.Noctra.repository.UserRepository;
@@ -54,9 +55,8 @@ public class FavoriteServiceImpl implements FavoriteService {
     @Override
     public void removeFavorite(User user, Long contentId) {
         Favorite favorite = favoriteRepository
-                .findByUserIdAndContentId(user, contentId)
-                .orElseThrow(() -> new FavoriteAlreadyExistsException("No existe en favoritos"));
-
+                .findByUserIdAndContentId(user.getId(), contentId) // <-- user.getId()
+                .orElseThrow(() -> new FavoriteNotFoundException("No existe en favoritos"));
         favoriteRepository.delete(favorite);
     }
 
@@ -71,4 +71,5 @@ public class FavoriteServiceImpl implements FavoriteService {
                         .build())
                 .toList();
     }
+
 }

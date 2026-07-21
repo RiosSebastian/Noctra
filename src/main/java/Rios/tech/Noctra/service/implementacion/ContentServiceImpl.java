@@ -22,6 +22,7 @@ public class ContentServiceImpl implements ContentService {
     @Override
     public ContentResponseDTO create(ContentRequestDTO dto) {
         Content content = contentMapper.toEntity(dto);
+        content = contentRepository.save(content);
         return contentMapper.toResponse(content);
     }
 

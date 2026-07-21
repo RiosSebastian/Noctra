@@ -64,10 +64,8 @@ public class UserServisImpl implements UserService {
     public UserResponseDTO updateUser(Long id, UserRequestDTO userDTOReq) {
         User existingUser = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException("Usuario no encontrado"));
-        existingUser.setPassword(userDTOReq.getPassword());
+        existingUser.setPassword(passwordEncoder.encode(userDTOReq.getPassword())); // <-- encode
         existingUser.setEmail(userDTOReq.getEmail());
-        //existingUser.setUsername(Rol.valueOf(userDTOReq.getRol()));
-
         existingUser = userRepository.save(existingUser);
         return userMapper.toResponse(existingUser);
     }

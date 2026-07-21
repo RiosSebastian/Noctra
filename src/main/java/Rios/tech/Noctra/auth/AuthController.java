@@ -2,6 +2,7 @@ package Rios.tech.Noctra.auth;
 
 import Rios.tech.Noctra.auth.dto.AuthenticationRequest;
 import Rios.tech.Noctra.auth.dto.AuthenticationResponse;
+import Rios.tech.Noctra.auth.dto.RegisterRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private final AuthService authService;
-    
+
     @Operation(summary = "Registrar usuario")
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(
@@ -29,7 +30,7 @@ public class AuthController {
 
         );
     }
-
+    @Operation(summary = "Iniciar sesión")
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> login(
 
