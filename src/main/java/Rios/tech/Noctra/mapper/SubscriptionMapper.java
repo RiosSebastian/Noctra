@@ -13,8 +13,9 @@ public class SubscriptionMapper {
     public Subscription toEntity(SubscriptionRequestDTO dto) {
         Subscription subscription = new Subscription();
         subscription.setType(dto.getType());
+        subscription.setPrice(dto.getType().getPrice());
         subscription.setStartDate(LocalDate.now());
-        subscription.setEndDate(LocalDate.now().plusMonths(1)); // ajustá según el plan
+        subscription.setEndDate(LocalDate.now().plusMonths(dto.getType().getDurationMonths()));
         return subscription;
     }
 
@@ -22,6 +23,7 @@ public class SubscriptionMapper {
         return SubscriptionResponseDTO.builder()
                 .id(subscription.getId())
                 .type(subscription.getType())
+                .price(subscription.getPrice())
                 .startDate(subscription.getStartDate())
                 .endDate(subscription.getEndDate())
                 .build();

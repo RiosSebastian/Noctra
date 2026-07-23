@@ -28,6 +28,12 @@ public class SubscriptionController {
         return ResponseEntity.ok(subscriptionService.getByUser(userId));
     }
 
+
+    @GetMapping("/me")
+    public ResponseEntity<SubscriptionResponseDTO> getMine(@AuthenticationPrincipal User user) {
+        return ResponseEntity.ok(subscriptionService.getByUser(user.getId()));
+    }
+
     @DeleteMapping
     public ResponseEntity<String> cancel(@AuthenticationPrincipal User user) {
         subscriptionService.cancel(user);

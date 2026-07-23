@@ -5,6 +5,7 @@ import Rios.tech.Noctra.dto.Response.HistoryResponseDTO;
 import Rios.tech.Noctra.entity.Content;
 import Rios.tech.Noctra.entity.History;
 import Rios.tech.Noctra.entity.Profile;
+import Rios.tech.Noctra.entity.User;
 import Rios.tech.Noctra.exception.ProfileNotFoundException;
 import Rios.tech.Noctra.repository.ContentRepository;
 import Rios.tech.Noctra.repository.HistoryRepository;
@@ -13,6 +14,7 @@ import Rios.tech.Noctra.service.HistoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.nio.file.AccessDeniedException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -43,7 +45,14 @@ public class HistoryServiceImpl implements HistoryService {
     }
 
     @Override
-    public List<HistoryResponseDTO> getHistory(Long profileId) {
+    public List<HistoryResponseDTO> getHistory(User user, Long profileId) {
+        Profile profile = profileRepository.findById(profileId)
+                .orElseThrow(() -> new ProfileNotFoundException("Perfil no encontrado"));
+
+        if (!profile.getUser().getId().equals(user.getId())) {
+            throw new AccessDeniedException("Este perfil no pertenece al usuario autenticado");
+        }
+
         return historyRepository.findByProfileId(profileId)
                 .stream()
                 .map(h -> HistoryResponseDTO.builder()
@@ -53,4 +62,8 @@ public class HistoryServiceImpl implements HistoryService {
                         .build())
                 .toList();
     }
+
+
+
+
 }

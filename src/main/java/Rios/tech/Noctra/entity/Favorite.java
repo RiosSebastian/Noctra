@@ -19,10 +19,5 @@ public class Favorite {
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "movie_id")
-    private  Movie movie;
-
-    @ManyToOne
     private Content content;
-
 }

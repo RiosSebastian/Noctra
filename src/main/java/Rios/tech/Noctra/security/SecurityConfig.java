@@ -37,10 +37,14 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/users/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/content/**", "/api/movies/**", "/api/series/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/movies/**", "/api/series/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/movies/**", "/api/series/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/movies/**", "/api/series/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/seasons/**", "/api/episodes/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/seasons/**", "/api/episodes/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/seasons/**", "/api/episodes/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
 

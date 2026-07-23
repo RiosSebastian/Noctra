@@ -2,11 +2,12 @@ package Rios.tech.Noctra.service;
 
 import Rios.tech.Noctra.dto.HistoryRequestDTO;
 import Rios.tech.Noctra.dto.Response.HistoryResponseDTO;
+import Rios.tech.Noctra.entity.User;
 
 import java.util.List;
 
 public interface HistoryService {
     void saveProgress(HistoryRequestDTO dto);
 
-    List<HistoryResponseDTO> getHistory(Long profileId);
+    List<HistoryResponseDTO> getHistory(User user, Long profileId);
 }
