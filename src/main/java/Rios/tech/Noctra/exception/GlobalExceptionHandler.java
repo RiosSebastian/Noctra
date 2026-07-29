@@ -160,4 +160,17 @@ public class GlobalExceptionHandler {
                 .build();
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
     }
+
+    @ExceptionHandler(SubscriptionExpiredException.class)
+    public ResponseEntity<ErrorResponse> handleSubscriptionExpired(
+            SubscriptionExpiredException ex,
+            HttpServletRequest request) {
+        ErrorResponse response = ErrorResponse.builder()
+                .timestamp(LocalDateTime.now())
+                .status(HttpStatus.PAYMENT_REQUIRED.value())
+                .error(ex.getMessage())
+                .path(request.getRequestURI())
+                .build();
+        return ResponseEntity.status(HttpStatus.PAYMENT_REQUIRED).body(response);
+    }
 }

@@ -1,6 +1,5 @@
 package Rios.tech.Noctra.service.implementacion;
 
-import Rios.tech.Noctra.dto.ContentRequestDTO;
 import Rios.tech.Noctra.dto.Response.ContentResponseDTO;
 import Rios.tech.Noctra.entity.Content;
 import Rios.tech.Noctra.exception.ContentNotFoundException;
@@ -19,12 +18,6 @@ public class ContentServiceImpl implements ContentService {
     private final ContentRepository contentRepository;
     private final ContentMapper contentMapper;
 
-    @Override
-    public ContentResponseDTO create(ContentRequestDTO dto) {
-        Content content = contentMapper.toEntity(dto);
-        content = contentRepository.save(content);
-        return contentMapper.toResponse(content);
-    }
 
     @Override
     public List<ContentResponseDTO> getAll() {

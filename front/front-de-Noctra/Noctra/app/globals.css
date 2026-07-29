@@ -1,0 +1,68 @@
+@import "tailwindcss";
+
+@theme {
+  --color-noctra-bg: #0A0710;
+  --color-noctra-surface: #150F1F;
+  --color-noctra-surface2: #1D1628;
+  --color-noctra-border: #2A2136;
+
+  --color-violet-glow: #C4B5FD;
+  --color-violet: #8B5CF6;
+  --color-violet-deep: #5B21B6;
+  --color-violet-ink: #2E1065;
+
+  --color-ink-50: #F3F0FA;
+  --color-ink-400: #9C93AE;
+
+  --font-display: var(--font-display-family);
+  --font-body: var(--font-body-family);
+}
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--color-noctra-bg);
+  color: var(--color-ink-50);
+  font-family: var(--font-body-family), system-ui, sans-serif;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-violet);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: var(--color-violet-deep);
+  color: var(--color-ink-50);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-noctra-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-noctra-surface2);
+  border-radius: 999px;
+}
+
+.bg-noctra-aurora {
+  background-image:
+    radial-gradient(120% 120% at 20% 0%, rgba(139,92,246,0.25) 0%, rgba(10,7,16,0) 55%),
+    radial-gradient(120% 120% at 80% 10%, rgba(91,33,182,0.20) 0%, rgba(10,7,16,0) 50%);
+}
+
+.shadow-glow {
+  box-shadow: 0 0 40px rgba(139,92,246,0.35);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

@@ -2,6 +2,7 @@ package Rios.tech.Noctra.auth;
 
 import Rios.tech.Noctra.auth.dto.AuthenticationRequest;
 import Rios.tech.Noctra.auth.dto.AuthenticationResponse;
+import Rios.tech.Noctra.auth.dto.RegisterRequest;
 import Rios.tech.Noctra.entity.User;
 import Rios.tech.Noctra.repository.UserRepository;
 import Rios.tech.Noctra.security.JwtService;

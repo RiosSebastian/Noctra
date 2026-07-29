@@ -1,5 +1,6 @@
 package Rios.tech.Noctra.service.implementacion;
 
+import org.springframework.security.access.AccessDeniedException;
 import Rios.tech.Noctra.dto.Response.ReviewResponseDTO;
 import Rios.tech.Noctra.dto.ReviewRequestDTO;
 import Rios.tech.Noctra.entity.Content;
@@ -14,7 +15,7 @@ import Rios.tech.Noctra.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.nio.file.AccessDeniedException;
+
 import java.util.List;
 
 @Service

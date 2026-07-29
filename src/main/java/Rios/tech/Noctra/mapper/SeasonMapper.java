@@ -7,21 +7,16 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class SeasonMapper {
-
-    public Season toEntity(SeasonRequestDTO dto){
-
+    public Season toEntity(SeasonRequestDTO dto) {
         Season season = new Season();
-
-        season.setNumbre(dto.getNumber());
-
+        season.setNumero(dto.getNumber());
         return season;
     }
 
-    public SeasonResponseDTO toResponse(Season season){
-
+    public SeasonResponseDTO toResponse(Season season) {
         return SeasonResponseDTO.builder()
                 .id(season.getId())
-                .number(season.getNumbre())
+                .number(season.getNumero())
                 .build();
     }
 }

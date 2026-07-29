@@ -15,7 +15,8 @@ public class Season {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Integer numbre;
+
+    private Integer numero;
 
     @ManyToOne
     private Series series;

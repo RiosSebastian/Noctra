@@ -39,4 +39,9 @@ public class SubscriptionController {
         subscriptionService.cancel(user);
         return ResponseEntity.ok("Suscripción cancelada");
     }
+
+    @PostMapping("/renew")
+    public ResponseEntity<SubscriptionResponseDTO> renew(@AuthenticationPrincipal User user) {
+        return ResponseEntity.ok(subscriptionService.renew(user));
+    }
 }

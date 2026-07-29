@@ -7,5 +7,6 @@ import Rios.tech.Noctra.entity.User;
 public interface SubscriptionService {
     SubscriptionResponseDTO subscribe(User user, SubscriptionRequestDTO dto);
     SubscriptionResponseDTO getByUser(Long userId);
+    SubscriptionResponseDTO renew(User user);
     void cancel(User user);
 }
