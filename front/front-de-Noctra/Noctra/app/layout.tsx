@@ -2,6 +2,7 @@
 import type { Metadata } from 'next';
 import { Unbounded, Inter } from 'next/font/google';
 import './globals.css';
+import { AuthProvider } from '@/lib/auth-context';
  
 // Tipografía de display: geométrica y con peso, para títulos y marca
 const unbounded = Unbounded({
@@ -25,7 +26,9 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="es" className={`${unbounded.variable} ${inter.variable}`}>
-      <body className="bg-noctra-bg text-ink-50 antialiased">{children}</body>
+      <body className="bg-noctra-bg text-ink-50 antialiased">
+        <AuthProvider>{children}</AuthProvider>
+      </body>
     </html>
   );
 }

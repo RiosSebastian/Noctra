@@ -1,9 +1,10 @@
 import Navbar from '@/components/Navbar';
 import ContentCard from '@/components/ContentCard';
 import type { Content } from '@/lib/types';
+import { API_URL } from '@/lib/api';
  
 async function getAllContent(): Promise<Content[]> {
-  const res = await fetch('http://localhost:8080/api/content', {
+  const res = await fetch(`${API_URL}/api/content`, {
     cache: 'no-store',
   });
   if (!res.ok) throw new Error('No se pudo obtener el contenido');
