@@ -73,4 +73,42 @@ export async function apiFetch(path: string, options: RequestInit = {}): Promise
   return fetch(`${API_URL}${path}`, { ...options, headers });
 }
 
+export interface CurrentUser {
+  id: number;
+  username: string;
+  email: string;
+}
+
+export async function getCurrentUser(): Promise<CurrentUser> {
+  const res = await apiFetch('/api/users/me');
+  if (!res.ok) throw new Error('No se pudo obtener el usuario actual');
+  return res.json();
+}
+
+export async function addFavorite(contentId: number): Promise<void> {
+  const res = await apiFetch('/api/favorites', {
+    method: 'POST',
+    body: JSON.stringify({ contentId }),
+  });
+  // 409 = ya estaba en favoritos, lo tratamos como éxito (idempotente para el usuario)
+  if (!res.ok && res.status !== 409) {
+    throw new Error(await parseErrorMessage(res));
+  }
+}
+
+export async function removeFavorite(contentId: number): Promise<void> {
+  const res = await apiFetch(`/api/favorites?contentId=${contentId}`, {
+    method: 'DELETE',
+  });
+  if (!res.ok && res.status !== 404) {
+    throw new Error(await parseErrorMessage(res));
+  }
+}
+
+export async function getFavorites(userId: number): Promise<import('./types').Favorite[]> {
+  const res = await apiFetch(`/api/favorites/${userId}`);
+  if (!res.ok) throw new Error('No se pudo obtener tu lista');
+  return res.json();
+}
+
 export { API_URL };

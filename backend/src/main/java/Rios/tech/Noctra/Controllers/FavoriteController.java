@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 
 @RestController
@@ -36,8 +37,18 @@ public class FavoriteController {
 
         return ResponseEntity.ok("Eliminado");
     }
+
+    // Antes cualquier usuario autenticado podía pasar el userId de otra persona
+    // y ver sus favoritos. Ahora solo se puede consultar la propia lista.
     @GetMapping("/{userId}")
-    public ResponseEntity<List<FavoriteResponseDTO>> getFavorites(@Valid @PathVariable Long userId){
+    public ResponseEntity<List<FavoriteResponseDTO>> getFavorites(
+            @AuthenticationPrincipal User user,
+            @Valid @PathVariable Long userId) throws AccessDeniedException {
+
+        if (!user.getId().equals(userId)) {
+            throw new AccessDeniedException("No podés ver los favoritos de otro usuario");
+        }
+
         return ResponseEntity.ok(favoriteService.getFavorites(userId));
     }
 }

@@ -48,8 +48,8 @@ export default function Navbar() {
         <ul className="hidden md:flex items-center gap-8">
           {LINKS.map((link) => (
             <li key={link.href}>
-              <a
-                href={link.href}
+              
+                <a href={link.href}
                 className="text-sm font-medium text-ink-50/80 hover:text-violet-glow transition-colors"
               >
                 {link.label}
@@ -69,8 +69,8 @@ export default function Navbar() {
             </button>
           </div>
         ) : (
-          <a
-            href="/login"
+          
+            <a href="/login"
             className="rounded-full bg-violet px-5 py-2 text-sm font-semibold text-ink-50 shadow-glow hover:bg-violet-deep transition-colors"
           >
             Iniciar sesión

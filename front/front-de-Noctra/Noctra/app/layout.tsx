@@ -1,9 +1,8 @@
-
 import type { Metadata } from 'next';
 import { Unbounded, Inter } from 'next/font/google';
 import './globals.css';
 import { AuthProvider } from '@/lib/auth-context';
- 
+
 // Tipografía de display: geométrica y con peso, para títulos y marca
 const unbounded = Unbounded({
   subsets: ['latin'],
@@ -15,12 +14,12 @@ const inter = Inter({
   subsets: ['latin'],
   variable: '--font-body-family',
 });
- 
+
 export const metadata: Metadata = {
   title: 'Noctra',
   description: 'Tu contenido, en las horas en que todo despierta.',
 };
- 
+
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
