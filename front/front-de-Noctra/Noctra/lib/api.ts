@@ -111,4 +111,12 @@ export async function getFavorites(userId: number): Promise<import('./types').Fa
   return res.json();
 }
 
+export async function getPopularMovies(page = 1): Promise<import('./types').TmdbMovie[]> {
+  const res = await fetch(`${API_URL}/api/movies/popular?page=${page}`, {
+    cache: 'no-store',
+  });
+  if (!res.ok) throw new Error('No se pudo obtener el catálogo de TMDB');
+  return res.json();
+}
+
 export { API_URL };

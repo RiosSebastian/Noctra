@@ -23,3 +23,15 @@ export interface Favorite {
   contentId: number;
   title: string;
 }
+
+export interface TmdbMovie {
+  id: number;
+  title: string;
+  genre: string | null;
+  duration: number | null;
+  overview: string | null;
+  posterUrl: string | null;
+  backdropUrl: string | null;
+  releaseDate: string | null;
+  rating: number | null;
+}

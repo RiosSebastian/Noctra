@@ -173,4 +173,17 @@ public class GlobalExceptionHandler {
                 .build();
         return ResponseEntity.status(HttpStatus.PAYMENT_REQUIRED).body(response);
     }
+
+    @ExceptionHandler(TmdbUnavailableException.class)
+    public ResponseEntity<ErrorResponse> handleTmdbUnavailable(
+            TmdbUnavailableException ex,
+            HttpServletRequest request) {
+        ErrorResponse response = ErrorResponse.builder()
+                .timestamp(LocalDateTime.now())
+                .status(HttpStatus.SERVICE_UNAVAILABLE.value())
+                .error(ex.getMessage())
+                .path(request.getRequestURI())
+                .build();
+        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(response);
+    }
 }

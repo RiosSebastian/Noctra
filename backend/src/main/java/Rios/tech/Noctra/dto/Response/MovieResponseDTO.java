@@ -10,4 +10,9 @@ public class MovieResponseDTO {
     private String title;
     private String genre;
     private Integer duration;
+    private String overview;
+    private String posterUrl;
+    private String backdropUrl;
+    private String releaseDate;
+    private Double rating;
 }
