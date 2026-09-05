@@ -1,4 +1,4 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8080';
 
 export interface AuthResponse {
   token: string;
@@ -116,6 +116,38 @@ export async function getPopularMovies(page = 1): Promise<import('./types').Tmdb
     cache: 'no-store',
   });
   if (!res.ok) throw new Error('No se pudo obtener el catálogo de TMDB');
+  return res.json();
+}
+
+export async function getTmdbMovieById(id: number): Promise<import('./types').TmdbMovie> {
+  const res = await fetch(`${API_URL}/api/movies/tmdb/${id}`, { cache: 'no-store' });
+  if (!res.ok) throw new Error('No se pudo obtener el detalle de la película');
+  return res.json();
+}
+
+export async function getContentById(id: number): Promise<import('./types').Content> {
+  const res = await fetch(`${API_URL}/api/content/${id}`, { cache: 'no-store' });
+  if (!res.ok) throw new Error('No se pudo obtener el contenido');
+  return res.json();
+}
+
+export async function searchContent(title: string): Promise<import('./types').Content[]> {
+  const res = await fetch(`${API_URL}/api/content/search?title=${encodeURIComponent(title)}`, {
+    cache: 'no-store',
+  });
+  if (!res.ok) throw new Error('No se pudo buscar en el catálogo');
+  return res.json();
+}
+
+export async function searchTmdbMovies(
+  query: string,
+  page = 1
+): Promise<import('./types').TmdbMovie[]> {
+  const res = await fetch(
+    `${API_URL}/api/movies/search?query=${encodeURIComponent(query)}&page=${page}`,
+    { cache: 'no-store' }
+  );
+  if (!res.ok) throw new Error('No se pudo buscar en TMDB');
   return res.json();
 }
 

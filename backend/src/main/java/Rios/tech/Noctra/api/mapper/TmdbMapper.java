@@ -27,11 +27,10 @@ public class TmdbMapper {
                 .backdropUrl(buildImageUrl(dto.backdropPath()))
                 .releaseDate(dto.releaseDate())
                 .rating(dto.voteAverage())
-                // TMDB no manda duración ni género en /movie/popular (el género viene
-                // como genre_ids, habría que resolverlo contra /genre/movie/list aparte),
-                // así que estos dos quedan sin dato por ahora.
-                .genre(null)
-                .duration(null)
+                .genre(dto.genres() != null && !dto.genres().isEmpty()
+                        ? dto.genres().get(0).name()
+                        : null)
+                .duration(dto.runtime())
                 .build();
     }
 

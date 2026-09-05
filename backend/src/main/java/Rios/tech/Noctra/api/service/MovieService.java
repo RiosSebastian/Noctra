@@ -25,4 +25,16 @@ public class MovieService {
                 .map(tmdbMapper::toMovieResponseDTO)
                 .toList();
     }
+
+    public MovieResponseDTO getMovieDetails(Long id) {
+        return tmdbMapper.toMovieResponseDTO(tmdbClient.getMovieDetails(id));
+    }
+
+    public List<MovieResponseDTO> searchMovies(String query, int page) {
+        return tmdbClient.searchMovies(query, page)
+                .results()
+                .stream()
+                .map(tmdbMapper::toMovieResponseDTO)
+                .toList();
+    }
 }

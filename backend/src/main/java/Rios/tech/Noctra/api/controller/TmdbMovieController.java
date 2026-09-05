@@ -17,9 +17,17 @@ public class TmdbMovieController {
     }
 
     @GetMapping("/popular")
-    public List<MovieResponseDTO> getPopularMovies(
-            @RequestParam(defaultValue = "1") int page
-    ) {
+    public List<MovieResponseDTO> getPopularMovies(@RequestParam(defaultValue = "1") int page) {
         return movieService.getPopularMovies(page);
+    }
+
+    @GetMapping("/tmdb/{id}")
+    public MovieResponseDTO getMovieDetails(@PathVariable Long id) {
+        return movieService.getMovieDetails(id);
+    }
+
+    @GetMapping("/search")
+    public List<MovieResponseDTO> searchMovies(@RequestParam String query, @RequestParam(defaultValue = "1") int page) {
+        return movieService.searchMovies(query, page);
     }
 }
