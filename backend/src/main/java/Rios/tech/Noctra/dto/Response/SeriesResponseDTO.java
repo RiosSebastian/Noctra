@@ -9,4 +9,9 @@ public class SeriesResponseDTO {
     private Long id;
     private String title;
     private String genre;
+    private String overview;
+    private String posterUrl;
+    private String backdropUrl;
+    private String firstAirDate;
+    private Double rating;
 }

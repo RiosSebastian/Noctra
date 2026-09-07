@@ -35,3 +35,14 @@ export interface TmdbMovie {
   releaseDate: string | null;
   rating: number | null;
 }
+
+export interface TmdbSeries {
+  id: number;
+  title: string;
+  genre: string | null;
+  overview: string | null;
+  posterUrl: string | null;
+  backdropUrl: string | null;
+  firstAirDate: string | null;
+  rating: number | null;
+}

@@ -2,7 +2,9 @@ package Rios.tech.Noctra.api.mapper;
 
 import Rios.tech.Noctra.api.config.TmdbConfig;
 import Rios.tech.Noctra.api.dto.TmdbMovieDto;
+import Rios.tech.Noctra.api.dto.TmdbSeriesDto;
 import Rios.tech.Noctra.dto.Response.MovieResponseDTO;
+import Rios.tech.Noctra.dto.Response.SeriesResponseDTO;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -36,5 +38,20 @@ public class TmdbMapper {
 
     private String buildImageUrl(String path) {
         return path != null ? imageBaseUrl + path : null;
+    }
+
+    public SeriesResponseDTO toSeriesResponseDTO(TmdbSeriesDto dto) {
+        return SeriesResponseDTO.builder()
+                .id(dto.id())
+                .title(dto.name())
+                .overview(dto.overview())
+                .posterUrl(buildImageUrl(dto.posterPath()))
+                .backdropUrl(buildImageUrl(dto.backdropPath()))
+                .firstAirDate(dto.firstAirDate())
+                .rating(dto.voteAverage())
+                .genre(dto.genres() != null && !dto.genres().isEmpty()
+                        ? dto.genres().get(0).name()
+                        : null)
+                .build();
     }
 }

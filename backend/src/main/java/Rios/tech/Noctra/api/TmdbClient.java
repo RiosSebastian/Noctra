@@ -3,6 +3,8 @@ package Rios.tech.Noctra.api;
 import Rios.tech.Noctra.api.config.TmdbConfig;
 import Rios.tech.Noctra.api.dto.TmdbMovieDto;
 import Rios.tech.Noctra.api.dto.TmdbMovieResponse;
+import Rios.tech.Noctra.api.dto.TmdbSeriesDto;
+import Rios.tech.Noctra.api.dto.TmdbSeriesResponse;
 import Rios.tech.Noctra.exception.TmdbUnavailableException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -78,6 +80,37 @@ public class TmdbClient {
                     .body(TmdbMovieResponse.class);
         } catch (RestClientException e) {
             throw new TmdbUnavailableException("No se pudo buscar en TMDB", e);
+        }
+    }
+
+    public TmdbSeriesResponse getPopularSeries(int page) {
+        try {
+            return restClient.get()
+                    .uri(uriBuilder -> uriBuilder
+                            .path("/tv/popular")
+                            .queryParam("language", "es-ES")
+                            .queryParam("page", page)
+                            .build()
+                    )
+                    .retrieve()
+                    .body(TmdbSeriesResponse.class);
+        } catch (RestClientException e) {
+            throw new TmdbUnavailableException("No se pudo obtener las series de TMDB", e);
+        }
+    }
+
+    public TmdbSeriesDto getSeriesDetails(Long id) {
+        try {
+            return restClient.get()
+                    .uri(uriBuilder -> uriBuilder
+                            .path("/tv/{id}")
+                            .queryParam("language", "es-ES")
+                            .build(id)
+                    )
+                    .retrieve()
+                    .body(TmdbSeriesDto.class);
+        } catch (RestClientException e) {
+            throw new TmdbUnavailableException("No se pudo obtener el detalle de la serie", e);
         }
     }
 }

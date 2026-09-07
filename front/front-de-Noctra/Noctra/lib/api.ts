@@ -151,4 +151,16 @@ export async function searchTmdbMovies(
   return res.json();
 }
 
+export async function getPopularSeries(page = 1): Promise<import('./types').TmdbSeries[]> {
+  const res = await fetch(`${API_URL}/api/series/popular?page=${page}`, { cache: 'no-store' });
+  if (!res.ok) throw new Error('No se pudieron obtener las series de TMDB');
+  return res.json();
+}
+
+export async function getTmdbSeriesById(id: number): Promise<import('./types').TmdbSeries> {
+  const res = await fetch(`${API_URL}/api/series/tmdb/${id}`, { cache: 'no-store' });
+  if (!res.ok) throw new Error('No se pudo obtener el detalle de la serie');
+  return res.json();
+}
+
 export { API_URL };
