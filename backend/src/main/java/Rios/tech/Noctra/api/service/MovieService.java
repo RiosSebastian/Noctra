@@ -1,6 +1,7 @@
 package Rios.tech.Noctra.api.service;
 
 import Rios.tech.Noctra.api.TmdbClient;
+import Rios.tech.Noctra.api.dto.TmdbGenreDto;
 import Rios.tech.Noctra.api.mapper.TmdbMapper;
 import Rios.tech.Noctra.dto.Response.MovieResponseDTO;
 import org.springframework.stereotype.Service;
@@ -32,6 +33,18 @@ public class MovieService {
 
     public List<MovieResponseDTO> searchMovies(String query, int page) {
         return tmdbClient.searchMovies(query, page)
+                .results()
+                .stream()
+                .map(tmdbMapper::toMovieResponseDTO)
+                .toList();
+    }
+
+    public List<TmdbGenreDto> getGenres() {
+        return tmdbClient.getMovieGenres().genres();
+    }
+
+    public List<MovieResponseDTO> getMoviesByGenre(Long genreId, int page) {
+        return tmdbClient.discoverMoviesByGenre(genreId, page)
                 .results()
                 .stream()
                 .map(tmdbMapper::toMovieResponseDTO)

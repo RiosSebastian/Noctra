@@ -1,5 +1,6 @@
 package Rios.tech.Noctra.api.controller;
 
+import Rios.tech.Noctra.api.dto.TmdbGenreDto;
 import Rios.tech.Noctra.api.service.MovieService;
 import Rios.tech.Noctra.dto.Response.MovieResponseDTO;
 import org.springframework.web.bind.annotation.*;
@@ -29,5 +30,15 @@ public class TmdbMovieController {
     @GetMapping("/search")
     public List<MovieResponseDTO> searchMovies(@RequestParam String query, @RequestParam(defaultValue = "1") int page) {
         return movieService.searchMovies(query, page);
+    }
+
+    @GetMapping("/genres")
+    public List<TmdbGenreDto> getGenres() {
+        return movieService.getGenres();
+    }
+
+    @GetMapping("/discover")
+    public List<MovieResponseDTO> discoverByGenre(@RequestParam Long genreId, @RequestParam(defaultValue = "1") int page) {
+        return movieService.getMoviesByGenre(genreId, page);
     }
 }

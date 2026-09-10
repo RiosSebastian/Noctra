@@ -163,4 +163,50 @@ export async function getTmdbSeriesById(id: number): Promise<import('./types').T
   return res.json();
 }
 
+export async function searchTmdbSeries(
+  query: string,
+  page = 1
+): Promise<import('./types').TmdbSeries[]> {
+  const res = await fetch(
+    `${API_URL}/api/series/search?query=${encodeURIComponent(query)}&page=${page}`,
+    { cache: 'no-store' }
+  );
+  if (!res.ok) throw new Error('No se pudo buscar series en TMDB');
+  return res.json();
+}
+
+export async function getMovieGenres(): Promise<import('./types').Genre[]> {
+  const res = await fetch(`${API_URL}/api/movies/genres`, { cache: 'no-store' });
+  if (!res.ok) throw new Error('No se pudieron obtener los géneros de películas');
+  return res.json();
+}
+
+export async function getSeriesGenres(): Promise<import('./types').Genre[]> {
+  const res = await fetch(`${API_URL}/api/series/genres`, { cache: 'no-store' });
+  if (!res.ok) throw new Error('No se pudieron obtener los géneros de series');
+  return res.json();
+}
+
+export async function discoverMoviesByGenre(
+  genreId: number,
+  page = 1
+): Promise<import('./types').TmdbMovie[]> {
+  const res = await fetch(`${API_URL}/api/movies/discover?genreId=${genreId}&page=${page}`, {
+    cache: 'no-store',
+  });
+  if (!res.ok) throw new Error('No se pudo filtrar por género');
+  return res.json();
+}
+
+export async function discoverSeriesByGenre(
+  genreId: number,
+  page = 1
+): Promise<import('./types').TmdbSeries[]> {
+  const res = await fetch(`${API_URL}/api/series/discover?genreId=${genreId}&page=${page}`, {
+    cache: 'no-store',
+  });
+  if (!res.ok) throw new Error('No se pudo filtrar por género');
+  return res.json();
+}
+
 export { API_URL };

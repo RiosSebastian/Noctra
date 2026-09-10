@@ -1,7 +1,8 @@
 import Navbar from '@/components/Navbar';
 import ContentCard from '@/components/ContentCard';
 import TmdbMovieCard from '@/components/TmdbMovieCard';
-import { searchContent, searchTmdbMovies } from '@/lib/api';
+import TmdbSeriesCard from '@/components/TmdbSeriesCard';
+import { searchContent, searchTmdbMovies, searchTmdbSeries } from '@/lib/api';
 
 export default async function BuscarPage({
   searchParams,
@@ -22,12 +23,14 @@ export default async function BuscarPage({
     );
   }
 
-  const [ownResults, tmdbResults] = await Promise.all([
+  const [ownResults, tmdbMovieResults, tmdbSeriesResults] = await Promise.all([
     searchContent(query).catch(() => []),
     searchTmdbMovies(query).catch(() => []),
+    searchTmdbSeries(query).catch(() => []),
   ]);
 
-  const hasResults = ownResults.length > 0 || tmdbResults.length > 0;
+  const hasResults =
+    ownResults.length > 0 || tmdbMovieResults.length > 0 || tmdbSeriesResults.length > 0;
 
   return (
     <div className="min-h-screen">
@@ -50,12 +53,23 @@ export default async function BuscarPage({
           </div>
         )}
 
-        {tmdbResults.length > 0 && (
-          <div>
-            <h2 className="font-display text-lg font-semibold mb-4 text-ink-400">En TMDB</h2>
+        {tmdbMovieResults.length > 0 && (
+          <div className="mb-10">
+            <h2 className="font-display text-lg font-semibold mb-4 text-ink-400">Películas en TMDB</h2>
             <div className="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-6">
-              {tmdbResults.map((movie) => (
+              {tmdbMovieResults.map((movie) => (
                 <TmdbMovieCard key={movie.id} movie={movie} />
+              ))}
+            </div>
+          </div>
+        )}
+
+        {tmdbSeriesResults.length > 0 && (
+          <div>
+            <h2 className="font-display text-lg font-semibold mb-4 text-ink-400">Series en TMDB</h2>
+            <div className="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-6">
+              {tmdbSeriesResults.map((s) => (
+                <TmdbSeriesCard key={s.id} series={s} />
               ))}
             </div>
           </div>

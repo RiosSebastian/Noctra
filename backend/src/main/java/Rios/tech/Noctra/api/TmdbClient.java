@@ -1,10 +1,7 @@
 package Rios.tech.Noctra.api;
 
 import Rios.tech.Noctra.api.config.TmdbConfig;
-import Rios.tech.Noctra.api.dto.TmdbMovieDto;
-import Rios.tech.Noctra.api.dto.TmdbMovieResponse;
-import Rios.tech.Noctra.api.dto.TmdbSeriesDto;
-import Rios.tech.Noctra.api.dto.TmdbSeriesResponse;
+import Rios.tech.Noctra.api.dto.*;
 import Rios.tech.Noctra.exception.TmdbUnavailableException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -111,6 +108,87 @@ public class TmdbClient {
                     .body(TmdbSeriesDto.class);
         } catch (RestClientException e) {
             throw new TmdbUnavailableException("No se pudo obtener el detalle de la serie", e);
+        }
+    }
+
+    public TmdbSeriesResponse searchSeries(String query, int page) {
+        try {
+            return restClient.get()
+                    .uri(uriBuilder -> uriBuilder
+                            .path("/search/tv")
+                            .queryParam("language", "es-ES")
+                            .queryParam("query", query)
+                            .queryParam("page", page)
+                            .build()
+                    )
+                    .retrieve()
+                    .body(TmdbSeriesResponse.class);
+        } catch (RestClientException e) {
+            throw new TmdbUnavailableException("No se pudo buscar series en TMDB", e);
+        }
+    }
+
+    public TmdbGenreListResponse getMovieGenres() {
+        try {
+            return restClient.get()
+                    .uri(uriBuilder -> uriBuilder
+                            .path("/genre/movie/list")
+                            .queryParam("language", "es-ES")
+                            .build()
+                    )
+                    .retrieve()
+                    .body(TmdbGenreListResponse.class);
+        } catch (RestClientException e) {
+            throw new TmdbUnavailableException("No se pudo obtener los géneros de películas", e);
+        }
+    }
+
+    public TmdbGenreListResponse getSeriesGenres() {
+        try {
+            return restClient.get()
+                    .uri(uriBuilder -> uriBuilder
+                            .path("/genre/tv/list")
+                            .queryParam("language", "es-ES")
+                            .build()
+                    )
+                    .retrieve()
+                    .body(TmdbGenreListResponse.class);
+        } catch (RestClientException e) {
+            throw new TmdbUnavailableException("No se pudo obtener los géneros de series", e);
+        }
+    }
+
+    public TmdbMovieResponse discoverMoviesByGenre(Long genreId, int page) {
+        try {
+            return restClient.get()
+                    .uri(uriBuilder -> uriBuilder
+                            .path("/discover/movie")
+                            .queryParam("language", "es-ES")
+                            .queryParam("with_genres", genreId)
+                            .queryParam("page", page)
+                            .build()
+                    )
+                    .retrieve()
+                    .body(TmdbMovieResponse.class);
+        } catch (RestClientException e) {
+            throw new TmdbUnavailableException("No se pudo filtrar películas por género", e);
+        }
+    }
+
+    public TmdbSeriesResponse discoverSeriesByGenre(Long genreId, int page) {
+        try {
+            return restClient.get()
+                    .uri(uriBuilder -> uriBuilder
+                            .path("/discover/tv")
+                            .queryParam("language", "es-ES")
+                            .queryParam("with_genres", genreId)
+                            .queryParam("page", page)
+                            .build()
+                    )
+                    .retrieve()
+                    .body(TmdbSeriesResponse.class);
+        } catch (RestClientException e) {
+            throw new TmdbUnavailableException("No se pudo filtrar series por género", e);
         }
     }
 }

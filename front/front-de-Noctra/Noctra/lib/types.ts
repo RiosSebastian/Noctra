@@ -46,3 +46,8 @@ export interface TmdbSeries {
   firstAirDate: string | null;
   rating: number | null;
 }
+
+export interface Genre {
+  id: number;
+  name: string;
+}
